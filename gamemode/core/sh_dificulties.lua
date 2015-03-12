@@ -18,10 +18,10 @@ local function defineDifficulty(name,timeOnBlock,killOnBlock,color)
     killOnBlock=killOnBlock
   }
 end
-defineDifficulty("Easy",.8,false,ES.Color.White)
-defineDifficulty("Normal",.6,false,ES.Color.White)
-defineDifficulty("Hard",.4,false,ES.Color.White)
-defineDifficulty("Nightmare",.4,true,ES.Color.White)
+defineDifficulty("Easy",2,false,ES.Color.Yellow)
+defineDifficulty("Normal",1,false,ES.Color.Green)
+defineDifficulty("Hard",.5,false,ES.Color.Blue)
+defineDifficulty("Nightmare",.5,true,ES.Color.Red)
 
 local PLAYER=FindMetaTable("Player")
 function PLAYER:GetDifficulty()

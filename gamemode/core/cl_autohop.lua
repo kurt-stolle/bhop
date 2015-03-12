@@ -5,6 +5,10 @@ function BHOP:OnContextMenuOpen()
 	hook.Add("Think","BHDoAutoBhop",function()
 		if LocalPlayer():GetDifficulty().name ~= "Easy" and tostring(ply:ESGetRank()) ~= "owner" then
 			hook.Remove("Think","BHDoAutoBhop");
+			if didJump then
+				RunConsoleCommand("-jump")
+				didJump=false
+			end
 		elseif LocalPlayer():IsOnGround() and not didJump then
 			RunConsoleCommand("+jump")
 			didJump=true
@@ -16,4 +20,8 @@ function BHOP:OnContextMenuOpen()
 end
 function BHOP:OnContextMenuClose()
 	hook.Remove("Think","BHDoAutoBhop");
+	if didJump then
+		RunConsoleCommand("-jump")
+		didJump=false
+	end
 end

@@ -1,21 +1,12 @@
 surface.CreateFont("bhopKeyFont",{
 	font = "Roboto",
 	size = 14,
-	weight = 500,
-	italic = false,
+	weight = 400,
 })
-surface.CreateFont("bhopKeyFontShadow",{
-	font = "bhopKeyFont",
-	blursize = 2,
-})
+
 surface.CreateFont("bhopInfo",{
 	font = "Roboto",
-	size = 26,
-	weight = 500
+	size = 22,
+	weight = 400
 
-})
-surface.CreateFont("bhopInfoTiny",{
-	font = "Arial",
-	size = 12,
-	weight = 700
 })

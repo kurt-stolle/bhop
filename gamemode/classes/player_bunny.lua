@@ -12,20 +12,6 @@ PLAYER.CanUseFlashlight 	= true;
 if SERVER then
 	util.AddNetworkString("BHOP.SyncHullSize");
 
-	local models = {
-		Model("models/player/group01/male_09.mdl"),
-		Model("models/player/group01/male_08.mdl"),
-		Model("models/player/group01/male_07.mdl"),
-		Model("models/player/group01/male_06.mdl"),
-		Model("models/player/group01/male_05.mdl"),
-		Model("models/player/group01/male_04.mdl"),
-		Model("models/player/group01/male_02.mdl"),
-		Model("models/player/group01/female_06.mdl"),
-		Model("models/player/group01/female_04.mdl"),
-		Model("models/player/group01/female_02.mdl"),
-		Model("models/player/group01/female_01.mdl"),
-	}
-
 	function PLAYER:Loadout()
 		if self.Player:ESIsRankOrHigher("operator") then
 			self.Player:Give("bhop_mapconfig")
@@ -58,6 +44,7 @@ else
 end
 function PLAYER:SelectModel()
 	self.Player:ESSetModelToActive();
+	
 	local c = self.Player:GetDifficulty().color;
 	c = Vector(c.a/255,c.g/255,c.b/255);
 	self.Player:SetWeaponColor(c);

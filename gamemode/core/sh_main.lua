@@ -6,7 +6,7 @@ local function defineRank(name,icon)
 	if i == 0 then
 		pts=0
 	else
-		pts=(40 * math.pow(i,2) + 360 * i)
+		pts= (100 * math.pow(i,2) + 200 * math.pow(i,2) + 700 * i)
 	end
 
 	i=i+1
@@ -17,59 +17,26 @@ local function defineRank(name,icon)
     points=pts
   }
 end
-defineRank( "Beginner","icon16/award_star_bronze_1.png")
+defineRank( "Newbie","icon16/award_star_bronze_1.png")
+defineRank( "Peasant","icon16/award_star_bronze_1.png")
 defineRank( "Learning","icon16/award_star_bronze_2.png")
-defineRank( "Rookie","icon16/award_star_bronze_3.png")
-defineRank( "Casual","icon16/award_star_silver_1.png")
-defineRank( "Decent","icon16/award_star_silver_2.png")
-defineRank( "Good","icon16/award_star_silver_3.png")
-defineRank( "Addict","icon16/award_star_gold_1.png")
-defineRank( "Wizard","icon16/award_star_gold_2.png")
+defineRank( "Beginner","icon16/award_star_bronze_2.png")
+defineRank( "Rookie","icon16/award_star_bronze_2.png")
+defineRank( "Novice","icon16/award_star_bronze_3.png")
+defineRank( "Decent","icon16/award_star_bronze_3.png")
+defineRank( "Adept","icon16/award_star_bronze_3.png")
+defineRank( "Amazing","icon16/award_star_silver_1.png")
+defineRank( "Addict","icon16/award_star_silver_1.png")
+defineRank( "Insane","icon16/award_star_silver_2.png")
+defineRank( "Crazy","icon16/award_star_silver_2.png")
+defineRank( "Nasty","icon16/award_star_silver_3.png")
+defineRank( "Ludicrous","icon16/award_star_silver_3.png")
+defineRank( "Superb","icon16/award_star_gold_1.png")
+defineRank( "Magnificent","icon16/award_star_gold_1.png")
+defineRank( "Exalted","icon16/award_star_gold_2.png")
+defineRank( "Majestic","icon16/award_star_gold_2.png")
 defineRank( "Hacker","icon16/award_star_gold_3.png")
-
-local function fixvalue(v)
-	if string.len(tostring(v)) < 2 then
-		return "0"..v;
-	end
-	return v;
-end
-
-function BHOP:GetTimeLeft()
-	local str = tostring((40*60) - (CurTime() - (GetGlobalString("timeStart") or 0)))
-
-	local build = "";
-	if string.find(str,"%.") then
-		local parts = string.Explode(".",str);
-		build = fixvalue(math.floor(tonumber(parts[1])/60))..":"..fixvalue(tonumber(parts[1]) - math.floor(tonumber(parts[1])/60)*60)
-		build = build..":"..fixvalue(string.Left(parts[2],2));
-	else
-		build = fixvalue(math.floor(tonumber(str)/60))..":".. fixvalue(tonumber(str) - math.floor(tonumber(str)/60)*60)..":00"
-	end
-	return build
-end
-
-local PLAYER = FindMetaTable("Player");
-function PLAYER:GetTime()
-	return CurTime() - (self.StartTime or CurTime());
-end
-
-function PLAYER:GetTimeString()
-	local str = tostring(self:GetTime())
-
-	local build = "";
-	if string.find(str,"%.") then
-		local parts = string.Explode(".",str);
-		build = fixvalue(math.floor(tonumber(parts[1])/60))..":"..fixvalue(tonumber(parts[1]) - math.floor(tonumber(parts[1])/60)*60)
-		build = build..":"..fixvalue(string.Left(parts[2],2));
-	else
-		build = fixvalue(math.floor(tonumber(str)/60))..":".. fixvalue(tonumber(str) - math.floor(tonumber(str)/60)*60)..":00"
-	end
-	return build
-end
-
-function PLAYER:GetPoints()
-	return self:GetNWInt("points",0);
-end
+defineRank( "Wizard","icon16/award_star_gold_3.png")
 
 hook.Add( "ShouldCollide", "exclNoPlayersCollide", function(ent1,ent2)
 	if ( ent1:IsPlayer() and ent2:IsPlayer() and (ent1:Team() == ent2:Team()) ) then
@@ -111,20 +78,4 @@ end);
 
 function BHOP:PlayerNoClip(p)
 	return p:ESIsRankOrHigher("operator");
-end
-
-local playersCompleted = {}; -- so people can't rejoin and avoid their 'difficulty ban'
-function PLAYER:HasCompletedDifficulty(diff)
-	if not playersCompleted[tonumber(self:UniqueID())] or not playersCompleted[tonumber(self:UniqueID())][diff] then
-		return false;
-	end
-
-	return true;
-end
-
-function PLAYER:CompleteDifficulty(diff)
-	if not playersCompleted[tonumber(self:UniqueID())] then
-		playersCompleted[tonumber(self:UniqueID())] = {};
-	end
-	playersCompleted[tonumber(self:UniqueID())][diff] = true;
 end

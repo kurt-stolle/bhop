@@ -21,18 +21,14 @@ local function drawKey(x,y,w,h,text,pressed)
 
 		draw.RoundedBox(4,x+1,y+1,w-2,h-2,colorKeyMain)
 		draw.RoundedBox(4,x+2,y+2,w-4,h-4,colorKeyOverlay)
-
-		draw.RoundedBox(2,x+2,y+2,w-4,(h-4)/2,colorKeyGloss)
 	else
 		draw.RoundedBox(4,x+1,y+1,w-2,h-2,colorKeyPressed)
 		draw.RoundedBox(2,x+2,y+2,w-4,h-4,colorKeyOverlay)
 		draw.RoundedBox(2,x+2,y+2,w-4,h-4, color)
-		draw.RoundedBox(2,x+2,y+2,w-4,(h-4)/2,colorKeyGloss)
 	end
 
 
-	draw.SimpleText(text,"bhopKeyFontShadow",x+w/2,y+h/2,COLOR_BLACK,1,1)
-	draw.SimpleText(text,"bhopKeyFont",x+w/2,y+h/2,Color(220,220,220),1,1)
+	draw.SimpleText(text,"bhopKeyFont",x+w/2,y+h/2,ES.Color.White,1,1)
 end
 local vel = 0;
 local function drawInfoBox(x,y,w,h,text,info,lightup)
@@ -46,9 +42,8 @@ local function drawInfoBox(x,y,w,h,text,info,lightup)
 
 		draw.RoundedBox(2,x+2,y+2,w-4,h-4,color);
 	end
-	draw.SimpleText(text,"ESDefault.Shadow",x+6,y+2,COLOR_BLACK)
-	draw.SimpleText(text,"ESDefault",x+6,y+2,Color(220,220,220))
-	draw.SimpleText(info,"bhopInfo",x+5,y+13,COLOR_WHITE)
+	draw.SimpleText(text,"ESDefault-",x+6,y+4,ES.Color.White)
+	draw.SimpleText(info,"bhopInfo",x+5,y+15,COLOR_WHITE)
 end
 
 local plKeys = {};
@@ -80,12 +75,12 @@ function BHOP:HUDPaint()
 
 	local xKeyboard = 20;
 
-	drawKey(xKeyboard,ScrH()-20-40,80,40,"crouch",											(watch == LocalPlayer() and watch:KeyDown(IN_DUCK)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_DUCK]) 		)
+	drawKey(xKeyboard,ScrH()-20-40,80,40,"CROUCH",											(watch == LocalPlayer() and watch:KeyDown(IN_DUCK)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_DUCK]) 		)
 	drawKey(xKeyboard+80+margin,ScrH()-20-40,40,40,"A",										(watch == LocalPlayer() and watch:KeyDown(IN_MOVELEFT)) 	or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_MOVELEFT]) 	)
 	drawKey(xKeyboard+80+margin+40+margin,ScrH()-20-40-margin-40,40,40,"W",					(watch == LocalPlayer() and watch:KeyDown(IN_FORWARD)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_FORWARD]) 		)
 	drawKey(xKeyboard+80+margin+40+margin,ScrH()-20-40,40,40,"S",							(watch == LocalPlayer() and watch:KeyDown(IN_BACK)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_BACK]) 		)
 	drawKey(xKeyboard+80+margin+40+margin+40+margin,ScrH()-20-40,40,40,"D",					(watch == LocalPlayer() and watch:KeyDown(IN_MOVERIGHT)) 	or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_MOVERIGHT]) 	)
-	drawKey(xKeyboard+80+margin+40+margin+40+margin+40+margin,ScrH()-20-40,220,40,"jump",	(watch == LocalPlayer() and watch:KeyDown(IN_JUMP))			or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_JUMP]) 		)
+	drawKey(xKeyboard+80+margin+40+margin+40+margin+40+margin,ScrH()-20-40,220,40,"JUMP",	(watch == LocalPlayer() and watch:KeyDown(IN_JUMP))			or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_JUMP]) 		)
 
 	local p = LocalPlayer();
 	for k,v in pairs(team.GetPlayers(TEAM_BUNNY))do
@@ -111,9 +106,8 @@ function BHOP:HUDPaint()
 
 			draw.RoundedBox(0,x+1,y+40-3,progress,2,color);
 		end
-		draw.SimpleText("CURRENT RANK: "..string.upper(watch:GetRank().name),"ESDefault.Shadow",x+6,y+2,COLOR_BLACK)
-		draw.SimpleText("CURRENT RANK: "..string.upper(watch:GetRank().name),"ESDefault",x+6,y+2,Color(220,220,220));
-		draw.SimpleText(getDeltaRankPoints().."/"..getDeltaNextRankPoints().." Points","bhopInfo",x+5,y+13,COLOR_WHITE)
+		draw.SimpleText("CURRENT RANK: "..string.upper(watch:GetRank().name),"ESDefault-",x+6,y+4,ES.Color.White);
+		draw.SimpleText(getDeltaRankPoints().."/"..getDeltaNextRankPoints().." Points","bhopInfo",x+5,y+15,COLOR_WHITE)
 	end
 end
 net.Receive("bhKPrs",function()

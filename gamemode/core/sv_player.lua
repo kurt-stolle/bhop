@@ -40,37 +40,48 @@ hook.Add( "KeyPress", "exSprectatorPress", function(p,l)
 		end
 	end
 end)
-function BHOP:OnPlayerHitGround(ply)
-	local plt = ply:GetGroundEntity()
 
-	if plt:IsWorld() then
-		ply.last_plt = nil
-	end
-
-	if plt:GetClass() == "func_door" then
-		if ply:GetGroundEntity():EntIndex() == ply.last_plt and ply:GetDifficulty().killOnBlock then
-			ply:Kill()
-			ply.last_plt = nil
-			return
+local plt_hit={}
+hook.Add("Tick","BHOP.PlayerBHOPEnforcer",function()
+	for _,ply in ipairs(player.GetAll())do
+		if not IsValid(ply) or ply:Team() == TEAM_SPECTATOR then
+			continue
 		end
-			ply.last_plt = plt:EntIndex()
 
-		local time = ply:GetDifficulty().timeOnBlock
-		timer.Simple(time, function()
-			plt:SetOwner(ply)
-			if ply:GetDifficulty().killOnBlock and ply:GetGroundEntity():EntIndex() == ply.last_plt then
-				ply:Kill()
+		local plt=ply:GetGroundEntity()
+		if not IsValid(plt) or plt:GetClass() ~= "func_door" then
+			if ply.plt_last then
+				Entity(ply.plt_last):SetOwner(nil)
 			end
-		end)
+			ply.plt_last=nil
+			continue
+		elseif not ply.plt_last or ply.plt_last ~= plt:EntIndex() then
+			ply.plt_last = plt:EntIndex()
+			ply.plt_time = CurTime()
 
-		timer.Simple(time+0.4, function()
-			plt:SetOwner(nil)
-		end)
+			if not plt_hit[ply:UserID()] or not plt_hit[ply:UserID()][plt:EntIndex()] then
+				if not plt_hit[ply:UserID()] then
+					plt_hit[ply:UserID()]={}
+				end
 
-		ply:AddPoints(1)
+				plt_hit[ply:UserID()][plt:EntIndex()]=true
+				ply:AddPoints(1)
+			end
 
+			continue
+		elseif ply.plt_last and ply.plt_last == plt:EntIndex() and (ply.plt_time + ply:GetDifficulty().timeOnBlock) < CurTime() then
+			if ply:GetDifficulty().killOnBlock then
+				ply:Kill()
+			else
+				plt:SetOwner(ply)
+				timer.Simple(.1,function()
+					plt:SetOwner(nil)
+				end)
+			end
+			continue
+		end
 	end
-end
+end)
 function BHOP:PlayerShouldTakeDamage()
 	return false
 end
@@ -110,6 +121,8 @@ function BHOP:PlayerSpawn(p)
 	p:UnSpectate();
 
 	p:SendBest()
+
+	p:ESSetNetworkedVariable("bhop_starttime",CurTime())
 
 	player_manager.OnPlayerSpawn(p)
 	player_manager.RunClass(p,"Spawn")
