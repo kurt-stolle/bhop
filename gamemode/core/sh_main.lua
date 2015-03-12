@@ -39,7 +39,7 @@ defineRank( "Hacker","icon16/award_star_gold_3.png")
 defineRank( "Wizard","icon16/award_star_gold_3.png")
 
 hook.Add( "ShouldCollide", "exclNoPlayersCollide", function(ent1,ent2)
-	if ( ent1:IsPlayer() and ent2:IsPlayer() and (ent1:Team() == ent2:Team()) ) then
+	if ( ent1:IsPlayer() and ent2:IsPlayer() ) then
 		return false;
 	end
 end)
