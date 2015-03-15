@@ -18,6 +18,9 @@ hook.Add("PlayerBindPress", "BHOP.ACDetectBinds", function( ply, bind, press )
 	end
 end)
 
+--[[
+
+-- Old detection method, doesn't work very well and may result in false positives.
 local count = 0
 hook.Add("Think", "BHOP.ACNoBindCheats", function()
 	if input.IsKeyDown(KEY_SPACE) then
@@ -30,3 +33,5 @@ hook.Add("Think", "BHOP.ACNoBindCheats", function()
     net.SendToServer()
 	end
 end)
+
+]]
