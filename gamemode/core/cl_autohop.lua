@@ -1,9 +1,9 @@
 didJump=true
 function BHOP:OnContextMenuOpen()
-	if LocalPlayer():GetDifficulty().name ~= "Easy" and tostring(ply:ESGetRank()) ~= "owner" then hook.Remove("Think","BHDoAutoBhop"); chat.AddText("Autohop can only be used in Easy mode.") return end
+	if LocalPlayer():GetDifficulty().name ~= "Easy" then hook.Remove("Think","BHDoAutoBhop"); chat.AddText("Autohop can only be used in Easy mode.") return end
 
 	hook.Add("Think","BHDoAutoBhop",function()
-		if LocalPlayer():GetDifficulty().name ~= "Easy" and tostring(ply:ESGetRank()) ~= "owner" then
+		if LocalPlayer():GetDifficulty().name ~= "Easy" then
 			hook.Remove("Think","BHDoAutoBhop");
 			if didJump then
 				RunConsoleCommand("-jump")
