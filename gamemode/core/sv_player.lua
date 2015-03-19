@@ -110,6 +110,8 @@ function BHOP:PlayerSpawn(p)
 		return;
 	end
 
+	p:SetCustomCollisionCheck(true)
+
 	p.HasReceivedBananas = {};
 	p.MailboxesClaimed = 0;
 

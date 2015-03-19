@@ -8,8 +8,8 @@ PLAYER.RunSpeed				= 250;
 PLAYER.CrouchedWalkSpeed 	= (85/250)
 PLAYER.JumpPower 			= 280
 PLAYER.CanUseFlashlight 	= true;
-PLAYER.TeammateNoCollide	= false		-- Do we collide with teammates or run straight through them
-PLAYER.AvoidPlayers			= false	
+PLAYER.TeammateNoCollide	= false;		-- Do we collide with teammates or run straight through them
+PLAYER.AvoidPlayers			= false;
 
 if SERVER then
 	util.AddNetworkString("BHOP.SyncHullSize");
