@@ -84,7 +84,16 @@ end)
 hook.Add("PlayerBindPress", "BHKeyBinds", function(pl, bind, pressed)
 	if bind == "+menu" then
 		RunConsoleCommand("bhop_dropweapon")
+		return true
 	elseif bind == "gm_showhelp" then
 		RunConsoleCommand("bhop_open_difficulty")
+		return true
+	elseif bind == "gm_showspare2" then
+		RunConsoleCommand("bhop_requestspawn",LocalPlayer():GetDifficulty())
+		return true
 	end
+end)
+
+concommand.Add("bhop_reset",function()
+	RunConsoleCommand("bhop_requestspawn",LocalPlayer():GetDifficulty())
 end)

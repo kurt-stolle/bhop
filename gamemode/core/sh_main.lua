@@ -77,5 +77,5 @@ hook.Add("Initialize","bhopCSSWeps",function()
 end);
 
 function BHOP:PlayerNoClip(p)
-	return p:ESIsRankOrHigher("operator");
+	return p:ESIsRankOrHigher("superadmin");
 end

@@ -185,39 +185,3 @@ end
 concommand.Add("bhop_open_difficulty",openSpawnSelection)
 hook.Add("Initialize","BHOP.OpenDifficultyOnJoin",openSpawnSelection)
 local canRemove = false
-
-local reset;
-net.Receive("BHOpenResetMenu",function()
-	if reset and IsValid(reset) then reset:Remove() end
-
-	reset = vgui.Create("esFrame");
-	reset:SetTitle("Reset");
-	reset:SetSize(310,120);
-	reset:Center();
-
-	local lbl = Label("Are you sure you want to restart this bhop session?",reset);
-	lbl:SetFont("ESDefaultBold");
-	lbl:SetColor(COLOR_WHITE);
-	lbl:SetPos(10,40);
-	lbl:SizeToContents();
-
-	local by = reset:Add("esButton");
-	by:SetText("Yes, reset me   [ F4 ]");
-	by:SetPos(10,reset:GetTall() - 30 - 10);
-	by:SetSize(reset:GetWide()-20,30);
-
-	reset:MakePopup();
-end);
-
-local was_pressed = false;
-hook.Add("Think","exclResetWithFKeyts",function()
-	if reset and IsValid(reset) then
-		if input.IsKeyDown(KEY_F4) and not was_pressed then
-			was_pressed = true;
-			RunConsoleCommand("bhop_requestspawn",LocalPlayer():GetDifficulty())
-			if reset and IsValid(reset) then reset:Remove() end
-		elseif not input.IsKeyDown(KEY_F4) then
-			was_pressed = false;
-		end
-	end
-end)
