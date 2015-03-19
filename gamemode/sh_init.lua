@@ -18,7 +18,7 @@ BHOP.Website = "www.casualbananas.com"
 function BHOP.DebugPrint(...)
 	MsgC(Color(220,2420,220),"[BHOP DEBUG] [")
 	MsgC(SERVER and Color(90,150,255) or Color(255,255,90),SERVER and "SERVER" or "CLIENT");
-	MsgC(ES.Color["#1E1E1EFF"],"] ["..os.date().."]\t\t");
+	MsgC(Color(220,2420,220),"] ["..os.date().."]\t\t");
 	MsgC(Color(255,255,255),...);
 	Msg("\n");
 end

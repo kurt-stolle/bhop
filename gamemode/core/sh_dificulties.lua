@@ -8,20 +8,21 @@ function BHOP:CreateTeams()
 end
 
 local i=0
-local function defineDifficulty(name,timeOnBlock,killOnBlock,color)
+local function defineDifficulty(name,timeOnBlock,killOnBlock,color,mul)
   i=i+1
 
   BHOP.Difficulties[i]={
     name=name,
     color=color,
     timeOnBlock=timeOnBlock,
-    killOnBlock=killOnBlock
+    killOnBlock=killOnBlock,
+    mul=mul or 1
   }
 end
-defineDifficulty("Easy",2,false,ES.Color.Yellow)
-defineDifficulty("Normal",1,false,ES.Color.Green)
-defineDifficulty("Hard",.5,false,ES.Color.Blue)
-defineDifficulty("Nightmare",.5,true,ES.Color.Red)
+defineDifficulty("Easy",2,false,ES.Color.Yellow,1)
+defineDifficulty("Normal",1,false,ES.Color.Green,1.2)
+defineDifficulty("Hard",.5,false,ES.Color.Blue,1.4)
+defineDifficulty("Nightmare",.5,true,ES.Color.Red,1.6)
 
 local PLAYER=FindMetaTable("Player")
 function PLAYER:GetDifficulty()

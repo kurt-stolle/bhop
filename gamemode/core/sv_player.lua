@@ -122,6 +122,8 @@ function BHOP:PlayerSpawn(p)
 
 	p:SendBest()
 
+	p.didFinish=false;
+
 	p:ESSetNetworkedVariable("bhop_starttime",CurTime())
 
 	player_manager.OnPlayerSpawn(p)

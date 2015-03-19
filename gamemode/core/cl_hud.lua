@@ -3,8 +3,7 @@ COLOR_WHITE = COLOR_WHITE or Color(255,255,255);
 COLOR_BLACK = COLOR_BLACK or Color(0,0,0,255);
 local colorKeyPressed = Color(20,20,20);
 local colorKeyMain = Color(40,40,40);
-local colorKeyOverlay = Color(255,255,255,10);
-local colorKeyGloss = Color(255,255,255,2);
+local colorKeyOverlay = Color(255,255,255,8);
 local function drawKey(x,y,w,h,text,pressed)
 	if pressed then
 		x = x+2;
@@ -75,12 +74,12 @@ function BHOP:HUDPaint()
 
 	local xKeyboard = 20;
 
-	drawKey(xKeyboard,ScrH()-20-40,80,40,"CROUCH",											(watch == LocalPlayer() and watch:KeyDown(IN_DUCK)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_DUCK]) 		)
+	drawKey(xKeyboard,ScrH()-20-40,80,40,"Crouch",											(watch == LocalPlayer() and watch:KeyDown(IN_DUCK)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_DUCK]) 		)
 	drawKey(xKeyboard+80+margin,ScrH()-20-40,40,40,"A",										(watch == LocalPlayer() and watch:KeyDown(IN_MOVELEFT)) 	or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_MOVELEFT]) 	)
 	drawKey(xKeyboard+80+margin+40+margin,ScrH()-20-40-margin-40,40,40,"W",					(watch == LocalPlayer() and watch:KeyDown(IN_FORWARD)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_FORWARD]) 		)
 	drawKey(xKeyboard+80+margin+40+margin,ScrH()-20-40,40,40,"S",							(watch == LocalPlayer() and watch:KeyDown(IN_BACK)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_BACK]) 		)
 	drawKey(xKeyboard+80+margin+40+margin+40+margin,ScrH()-20-40,40,40,"D",					(watch == LocalPlayer() and watch:KeyDown(IN_MOVERIGHT)) 	or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_MOVERIGHT]) 	)
-	drawKey(xKeyboard+80+margin+40+margin+40+margin+40+margin,ScrH()-20-40,220,40,"JUMP",	(watch == LocalPlayer() and watch:KeyDown(IN_JUMP))			or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_JUMP]) 		)
+	drawKey(xKeyboard+80+margin+40+margin+40+margin+40+margin,ScrH()-20-40,220,40,"Jump",	(watch == LocalPlayer() and watch:KeyDown(IN_JUMP))			or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_JUMP]) 		)
 
 	local p = LocalPlayer();
 	for k,v in pairs(team.GetPlayers(TEAM_BUNNY))do
