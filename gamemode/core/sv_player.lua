@@ -158,6 +158,7 @@ end);
 local PLAYER = FindMetaTable("Player");
 
 util.AddNetworkString("bhopHasAlreadyCompleted")
+util.AddNetworkString("BHOP.SendNotification")
 concommand.Add("bhop_requestspawn",function(p,c,a)
 	local diff = tonumber(a[1] or 0);
 	if not BHOP.Difficulties[diff] and diff~=0 then return end
@@ -169,6 +170,10 @@ concommand.Add("bhop_requestspawn",function(p,c,a)
 		p:SetTeam(diff);
 		p:Spawn();
 	end
+
+	net.Start("BHOP.SendNotification")
+	net.WriteString(p:GetDifficulty().name)
+	net.Send(p)
 end)
 BHOP.blockGroups = {};
 BHOP.blocks = {};

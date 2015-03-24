@@ -88,7 +88,6 @@ function BHOP:ScoreboardShow()
   	addPerformanceRow(sb,"Difficulty",LocalPlayer():GetDifficulty().name);
   	addPerformanceRow(sb,"Rank",LocalPlayer():GetRank().name)
   	addPerformanceRow(sb,"Total points",LocalPlayer():GetPoints());
-  	addPerformanceRow(sb,"Fails in current session",LocalPlayer():Deaths());
   	addPerformanceRow(sb,"Personal record in this map",(LocalPlayer().BestTime or "00:00:00"))
 	addPerformanceRow(sb,"Current time in this session",LocalPlayer():GetTimeString())
 

@@ -12,6 +12,7 @@ local function defineDifficulty(name,timeOnBlock,killOnBlock,color,mul)
   i=i+1
 
   BHOP.Difficulties[i]={
+    key=i,
     name=name,
     color=color,
     timeOnBlock=timeOnBlock,
@@ -25,6 +26,14 @@ defineDifficulty("Hard",.5,false,ES.Color.Blue,1.4)
 defineDifficulty("Nightmare",.5,true,ES.Color.Red,1.6)
 
 local PLAYER=FindMetaTable("Player")
+
+local spectator={
+  key=0,
+  name="Spectator",
+  timeOnBlock=0,
+  killOnBlock=false,
+  mul=0
+}
 function PLAYER:GetDifficulty()
-  return BHOP.Difficulties[self:Team()] or BHOP.Difficulties[1]
+  return BHOP.Difficulties[self:Team()] or spectator
 end
