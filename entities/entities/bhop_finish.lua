@@ -109,13 +109,7 @@ elseif CLIENT then
 		local ply = LocalPlayer()
 		local wep = ply:GetActiveWeapon()
 
-		--[[if ( !IsValid( wep ) ) then return end
-
-		local weapon_name = wep:GetClass()
-
-		if ( weapon_name != "weapon_physgun" ) then
-			return
-		end]]
+		local mins,maxs=self:OBBMins(),self:OBBMaxs();
 
 		render.SetMaterial( tx )
 		render.DrawBox( self:GetPos(),self:GetAngles(),mins,maxs,ES.Color["#FF4411AA"],true)
