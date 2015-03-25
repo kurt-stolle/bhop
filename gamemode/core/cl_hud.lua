@@ -47,7 +47,7 @@ end
 
 local plKeys = {};
 
-local margin = 10;
+local margin = 4;
 
 local function getNextRankPoints()
 	local lastrank=#BHOP.Ranks
@@ -65,6 +65,8 @@ end
 local function getDeltaNextRankPoints()
 	return getNextRankPoints()-LocalPlayer():GetRank().points;
 end
+
+local x,y;
 function BHOP:HUDPaint()
 	local watch = LocalPlayer();
 	if LocalPlayer():Team() == TEAM_SPECTATOR then
@@ -72,31 +74,31 @@ function BHOP:HUDPaint()
 	end
 	if !IsValid(watch) then return end
 
-	local xKeyboard = 20;
+	local x = 10;
 
-	drawKey(xKeyboard,ScrH()-20-40,80,40,"Crouch",											(watch == LocalPlayer() and watch:KeyDown(IN_DUCK)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_DUCK]) 		)
-	drawKey(xKeyboard+80+margin,ScrH()-20-40,40,40,"A",										(watch == LocalPlayer() and watch:KeyDown(IN_MOVELEFT)) 	or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_MOVELEFT]) 	)
-	drawKey(xKeyboard+80+margin+40+margin,ScrH()-20-40-margin-40,40,40,"W",					(watch == LocalPlayer() and watch:KeyDown(IN_FORWARD)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_FORWARD]) 		)
-	drawKey(xKeyboard+80+margin+40+margin,ScrH()-20-40,40,40,"S",							(watch == LocalPlayer() and watch:KeyDown(IN_BACK)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_BACK]) 		)
-	drawKey(xKeyboard+80+margin+40+margin+40+margin,ScrH()-20-40,40,40,"D",					(watch == LocalPlayer() and watch:KeyDown(IN_MOVERIGHT)) 	or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_MOVERIGHT]) 	)
-	drawKey(xKeyboard+80+margin+40+margin+40+margin+40+margin,ScrH()-20-40,220,40,"Jump",	(watch == LocalPlayer() and watch:KeyDown(IN_JUMP))			or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_JUMP]) 		)
+	drawKey(x,ScrH()-10-40,80,40,"Crouch",											(watch == LocalPlayer() and watch:KeyDown(IN_DUCK)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_DUCK]) 		)
+	drawKey(x+80+margin,ScrH()-10-40,40,40,"A",										(watch == LocalPlayer() and watch:KeyDown(IN_MOVELEFT)) 	or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_MOVELEFT]) 	)
+	drawKey(x+80+margin+40+margin,ScrH()-10-40-margin-40,40,40,"W",					(watch == LocalPlayer() and watch:KeyDown(IN_FORWARD)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_FORWARD]) 		)
+	drawKey(x+80+margin+40+margin,ScrH()-10-40,40,40,"S",							(watch == LocalPlayer() and watch:KeyDown(IN_BACK)) 		or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_BACK]) 		)
+	drawKey(x+80+margin+40+margin+40+margin,ScrH()-10-40,40,40,"D",					(watch == LocalPlayer() and watch:KeyDown(IN_MOVERIGHT)) 	or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_MOVERIGHT]) 	)
+	drawKey(x+80+margin+40+margin+40+margin+40+margin,ScrH()-10-40,220,40,"Jump",	(watch == LocalPlayer() and watch:KeyDown(IN_JUMP))			or (plKeys[watch:UniqueID()] and plKeys[watch:UniqueID()][IN_JUMP]) 		)
 
 	local p = LocalPlayer();
-	for k,v in pairs(team.GetPlayers(TEAM_BUNNY))do
-		if IsValid(v) and (v:GetPos()+Vector(0,0,40)):Distance(p:EyePos()) < 1000 then
+	for k,v in ipairs(player.GetAll())do
+		if IsValid(v) and v:Team() ~= TEAM_SPECTATOR and (v:GetPos()+Vector(0,0,40)):Distance(p:EyePos()) < 1000 then
 			local ps = (v:GetPos() + Vector(0,0,70)):ToScreen();
 
 			draw.SimpleTextOutlined(v:Nick(),"DermaDefaultBold",ps.x,ps.y,Color(255,255,255,255 - 255 * (v:GetPos():Distance(p:EyePos())/1000)),1,1,1,Color(0,0,0,255 - 255 * (v:GetPos():Distance(p:EyePos())/500)));
 		end
 	end
 
-	vel = Lerp(0.2,vel,watch:GetVelocity():Length())
-	drawInfoBox(ScrW()-20-80,ScrH()-20-40,80,40,"Velocity",math.floor(vel),math.floor(vel)/700);
-	drawInfoBox(ScrW()-20-80-20-120,ScrH()-20-40,120,40,"Time",watch:GetTimeString());
+	local vel=watch:GetVelocity():Length();
+	drawInfoBox(ScrW()-10-80,ScrH()-10-40,80,40,"Velocity",math.floor(vel),math.floor(vel)/700);
+	drawInfoBox(ScrW()-10-80-10-120,ScrH()-10-40,120,40,"Time",watch:GetTimeString());
 
 	if watch == LocalPlayer() then
 		local progress = math.Clamp((getDeltaRankPoints()/getDeltaNextRankPoints())*(200-2),0,(200-2));
-		local x,y = ScrW()-20-80-20-120-20-200,ScrH()-20-40;
+		x,y = ScrW()-10-80-10-120-10-200,ScrH()-10-40;
 		drawInfoBox(x,y,200,40,"","");
 
 		if progress > 8 then

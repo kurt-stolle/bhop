@@ -30,6 +30,7 @@ local PLAYER=FindMetaTable("Player")
 local spectator={
   key=0,
   name="Spectator",
+  color=ES.Color.Grey,
   timeOnBlock=0,
   killOnBlock=false,
   mul=0

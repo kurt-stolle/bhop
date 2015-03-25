@@ -129,7 +129,7 @@ openSpawnSelection = function()
 			if i <= #BHOP.Difficulties and LocalPlayer():HasCompletedDifficulty(BHOP.Difficulties[i]) then
 				hasAlreadyCompleted(i)
 			else
-				RunConsoleCommand("bhop_requestspawn",i)
+				RunConsoleCommand("bhop_requestspawn",i>#BHOP.Difficulties and 0 or i)
 				BHOP.DebugPrint("Requesting spawn on difficulty: "..((BHOP.Difficulties[i] and BHOP.Difficulties[i].name) or "Spectator"))
 			end
 
