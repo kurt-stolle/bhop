@@ -1,27 +1,11 @@
-didJump=true
-function BHOP:OnContextMenuOpen()
-	if LocalPlayer():GetDifficulty().name ~= "Easy" then hook.Remove("Think","BHDoAutoBhop"); chat.AddText("Autohop can only be used in Easy mode.") return end
+hook.Add( "CreateMove", "BHOP.Auto.CreateMove", function( input )
+	if not LocalPlayer():Alive() or not LocalPlayer().NextBunnyHop or LocalPlayer().NextBunnyHop < CurTime()  then return end
 
-	hook.Add("Think","BHDoAutoBhop",function()
-		if LocalPlayer():GetDifficulty().name ~= "Easy" then
-			hook.Remove("Think","BHDoAutoBhop");
-			if didJump then
-				RunConsoleCommand("-jump")
-				didJump=false
-			end
-		elseif LocalPlayer():IsOnGround() and not didJump then
-			RunConsoleCommand("+jump")
-			didJump=true
-		elseif didJump then
-			RunConsoleCommand("-jump")
-			didJump=false
-		end
-	end)
-end
-function BHOP:OnContextMenuClose()
-	hook.Remove("Think","BHDoAutoBhop");
-	if didJump then
-		RunConsoleCommand("-jump")
-		didJump=false
+	if input:KeyDown( IN_JUMP ) and (LocalPlayer():GetDifficulty().name == "Easy" or LocalPlayer():GetDifficulty().name == "Normal") then
+		input:SetButtons( input:GetButtons( ) - IN_JUMP )
 	end
-end
+end);
+
+hook.Add( "OnPlayerHitGround", "BHOP.Auto.HitGround", function( p, inWater, onFloater, speed )
+	p.NextBunnyHop = CurTime( );
+end);
