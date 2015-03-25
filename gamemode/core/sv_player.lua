@@ -234,3 +234,7 @@ concommand.Add("bhop_dropweapon", function( ply, cmd, args )
 end)
 
 concommand.Remove("changeteam");
+
+ES.AddCommand("r",function(p)
+		p:ConCommand("bhop_reset")
+end,0)

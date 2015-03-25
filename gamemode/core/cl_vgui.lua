@@ -55,26 +55,25 @@ end
 net.Receive("bhopHasAlreadyCompleted",hasAlreadyCompleted)
 
 local helpText = {}
-helpText[1] = [[This mode is for absolute beginners, you are allowed to cheat in this mode (using autohop, etc).
-Press and hold ]].. ( string.upper(input.LookupBinding("+menu_context") or "NOT BOUND (+menu_context)") ) ..[[ to auto bhop.
-- 0.5 seconds per block
+helpText[1] = [[This mode is for absolute beginners.
+- Autohop
+- Unlimited time on blocks
 - Checkpoint teleportation on fail
-- 5 bananas on finishing the map
 - Does not show up in leaderboards]]
 helpText[2] = [[Original bunnyhop, how it has always been in other games.
+- Authop
 - 0.2 seconds per block
 - Checkpoint teleportation on fail
-- 10 bananas on finishing the map
 - Ranked]]
 helpText[3] = [[Hard mode, you will have a hard time finishing this.
+- No autohop
 - 0.05 seconds per block
 - Checkpoint teleportation on fail
-- 15 bananas on finishing the map
 - Ranked]]
 helpText[4] = [[Nightmare mode. You will not complete this.
+- No autohop
 - 0.05 seconds per block
-- You fail You die.
-- 20 bananas on finishing the map
+- Death on doublestep
 - Ranked]]
 helpText[5] = [[Spectate mode, While spectating other players you can see their keystrokes.
 This is useful when learning how to bunnyhop, for you can watch others who are better than you.]]
