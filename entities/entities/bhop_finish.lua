@@ -46,6 +46,7 @@ if SERVER then
 		if IsValid(ply) and ply:IsPlayer() and not ply.didFinish then
 			ply.didFinish=true
 
+			ply:HandleLeaderboards()
 			ES.ChatBroadcast("<hl>"..ply:Nick().."</hl> has finished the map on <hl>"..ply:GetDifficulty().name.."</hl> mode in <hl>"..ply:GetTimeString().."</hl>!")
 
 			ply:AddPoints(50 * BHOP:GetMapPointsMultiplier() * ply:GetDifficulty().mul)

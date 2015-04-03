@@ -107,10 +107,10 @@ openSpawnSelection = function()
 		draw.RoundedBox(0,0,0,w,h,Color(0,0,0,200));
 		Derma_DrawBackgroundBlur(self,self.TimeCreate);
 
-		draw.SimpleText("SELECT YOUR DIFFICULTY","BHOPDifficultyHeader",marginX,marginX,COLOR_WHITE,0,0);
+		draw.SimpleText("SELECT YOUR MODE","BHOPDifficultyHeader",marginX,marginX,COLOR_WHITE,0,0);
 		if close then
 
-			draw.SimpleText("//CLOSE","BHOPDifficultyHeader",w-marginX,marginX, gui.MouseX() > self:GetWide()-marginX-300 and gui.MouseY() < (ScrH()/2 - 512/2 - 74 + 70) and COLOR_WHITE or Color(200,200,200),2,0);
+			draw.SimpleText("×","BHOPDifficultyHeader",w-marginX,marginX, gui.MouseX() > self:GetWide()-marginX-300 and gui.MouseY() < (ScrH()/2 - 512/2 - 74 + 70) and COLOR_WHITE or Color(200,200,200),2,0);
 		end
 	end
 

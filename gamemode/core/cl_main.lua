@@ -27,6 +27,8 @@ hook.Add("PlayerBindPress", "BHKeyBinds", function(pl, bind, pressed)
 	elseif bind == "gm_showhelp" and pressed then
 		RunConsoleCommand("bhop_open_difficulty")
 		return true
+	elseif bind == "gm_showteam" and pressed then
+		RunConsoleCommand("bhop_open_leaderboards")
 	elseif bind == "gm_showspare2" and pressed then
 		RunConsoleCommand("bhop_requestspawn",LocalPlayer():GetDifficulty().key)
 		return true
