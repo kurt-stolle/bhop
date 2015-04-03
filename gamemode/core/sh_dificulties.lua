@@ -20,7 +20,7 @@ local function defineDifficulty(name,timeOnBlock,killOnBlock,color,mul)
     mul=mul or 1
   }
 end
-defineDifficulty("Easy ",2,false,ES.Color.Yellow,1)
+defineDifficulty("Easy",2,false,ES.Color.Yellow,1)
 defineDifficulty("Normal",1,false,ES.Color.Green,1.2)
 defineDifficulty("Hard",.5,false,ES.Color.Blue,1.4)
 defineDifficulty("Nightmare",.5,true,ES.Color.Red,1.6)
