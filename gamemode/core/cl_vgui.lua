@@ -54,43 +54,37 @@ local function hasAlreadyCompleted(dif)
 end
 net.Receive("bhopHasAlreadyCompleted",hasAlreadyCompleted)
 
-local helpText = {}
-helpText[1] = [[This mode is for absolute beginners.
-- Autohop
-- Unlimited time on blocks
-- Checkpoint teleportation on fail
-- Does not show up in leaderboards]]
-helpText[2] = [[Original bunnyhop, how it has always been in other games.
-- Authop
-- 0.2 seconds per block
-- Checkpoint teleportation on fail
-- Ranked]]
-helpText[3] = [[Hard mode, you will have a hard time finishing this.
-- No autohop
-- 0.05 seconds per block
-- Checkpoint teleportation on fail
-- Ranked]]
-helpText[4] = [[Nightmare mode. You will not complete this.
-- No autohop
-- 0.05 seconds per block
-- Death on doublestep
-- Ranked]]
-helpText[5] = [[Spectate mode, While spectating other players you can see their keystrokes.
-This is useful when learning how to bunnyhop, for you can watch others who are better than you.]]
+local modeInfo={
+	{},{},{},{}
+}
 
-surface.CreateFont("bhopJoinInfoFont",{
-	font = "Roboto",
-	size = 22,
-	weight = 500,
-})
+modeInfo[1]["Autohop"]=true;
+modeInfo[1]["5.0s jump time"]=true
+modeInfo[1]["Ranked"]=false
+modeInfo[1]["Reduced reward"]=true
 
-local models = {"models/Humans/Group01/Male_05.mdl","models/Humans/Group02/male_02.mdl","models/Humans/Group03/male_07.mdl"
-,"models/Humans/Charple01.mdl",
- "models/Combine_Scanner.mdl"}
-local logoMat = Material("excl/vgui/bananaLogo.png");
-local btnWide = 180;
-local marginX = (ScrW()-(btnWide*5))/6
+modeInfo[2]["Autohop"]=true;
+modeInfo[2]["0.2s jump time"]=true
+modeInfo[2]["Ranked"]=true
+modeInfo[2]["Normal reward"]=true
+
+modeInfo[3]["Autohop"]=false;
+modeInfo[3]["0.2s jump time"]=true
+modeInfo[3]["Ranked"]=true
+modeInfo[3]["Generous reward"]=true
+
+modeInfo[4]["Autohop"]=false;
+modeInfo[4]["0.0s jump time (kill)"]=true
+modeInfo[4]["Ranked"]=true
+modeInfo[4]["Big reward"]=true
+
+local check=Material("icon16/tick.png")
+local cross=Material("icon16/cross.png")
+
+local btnWide = 240;
+local marginX = (ScrW()-(btnWide*4))/5
 local close=false;
+local y; -- for later
 openSpawnSelection = function()
 	if IsValid(joinFrame) then return end
 
@@ -116,66 +110,64 @@ openSpawnSelection = function()
 
 	local info
 	local pnl
-	for i=1,(#BHOP.Difficulties)+1 do
-		pnl=vgui.Create("Panel",joinFrame)
-		pnl:SetSize(btnWide,40+btnWide)
+	for i=1,(#BHOP.Difficulties) do
+		pnl=vgui.Create("esPanel",joinFrame)
+		pnl:SetColor(ES.Color["#1E1E1E"])
+		pnl:SetSize(btnWide,40+300)
 		pnl:SetPos(marginX*i + (i-1)*btnWide,ScrH()/2 -pnl:GetTall()/2);
 
+		local title=vgui.Create("esLabel",pnl)
+		title:SetText(BHOP.Difficulties[i].name.." mode")
+		title:SetFont("ESDefault++")
+		title:SizeToContents()
+		title:DockMargin(15,15,15,15)
+		title:Dock(TOP)
+
 		local btn = vgui.Create("esButton",pnl);
-		btn:SetPos(0,pnl:GetTall()-40);
-		btn:SetSize(btnWide,40);
+		btn:SetTall(40)
+		btn:Dock(BOTTOM)
 		btn.OnMouseReleased = function(self)
 			if i <= #BHOP.Difficulties and LocalPlayer():HasCompletedDifficulty(BHOP.Difficulties[i]) then
 				hasAlreadyCompleted(i)
 			else
-				RunConsoleCommand("bhop_requestspawn",i>#BHOP.Difficulties and 0 or i)
-				BHOP.DebugPrint("Requesting spawn on difficulty: "..((BHOP.Difficulties[i] and BHOP.Difficulties[i].name) or "Spectator"))
+				RunConsoleCommand("bhop_requestspawn",i)
+				BHOP.DebugPrint("Requesting spawn on difficulty: "..BHOP.Difficulties[i].name)
 			end
 
 			joinFrame:Remove()
 		end
-		btn.OnCursorEntered = function(self)
-			self.Hover = true
-			info:SetText(helpText[i])
-			info:SizeToContents()
-			timer.Simple(0,function()
-				if not IsValid(info) then return end
-				info:SetPos(marginX,pnl.y + pnl:GetTall() + marginX);
-			end)
-		end
-		btn.OnCursorExited = function(self)
-			self.Hover = false
-			info:SetText("Hover over one of the difficulties to view more information.")
-			info:SizeToContents()
-			timer.Simple(0,function()
-				if not IsValid(info) then return end
-				info:SetPos(marginX,pnl.y + pnl:GetTall() + marginX);
-			end)
-		end
-		btn:SetText(i == 1 and "Easy" or i == 2 and "Normal" or i == 3 and "Hard" or i == 4 and "Nightmare" or i == 5 and "Spectator mode");
+		btn:SetText(math.random(1,1000) == 1 and "Gotta go fast!" or "Go!");
 
-		local mdl = vgui.Create("DModelPanel",pnl);
-		mdl:SetSize(btnWide,btnWide);
-		mdl:SetPos(0,0);
-		mdl:SetModel(models[i]);
-		mdl.LayoutEntity = function() end
-		if i <= #BHOP.Difficulties then
-			mdl:SetLookAt(Vector(0,0,60));
-			mdl:SetCamPos(Vector(20,0,58));
-		else
-			mdl:SetLookAt(Vector(0,0,0));
-			mdl:SetCamPos(Vector(30,0,0));
+		for k,v in pairs(modeInfo[i])do
+			local row=vgui.Create("Panel",pnl)
+			row:SetTall(16)
+			row:Dock(TOP)
+			row:DockMargin(15,15,15,0)
+			local mat=vgui.Create("DImage",row)
+			mat:SetMaterial(v and check or cross)
+			mat:SetSize(16,16)
+			mat:SetPos(0,0)
+			local lbl=vgui.Create("esLabel",row)
+			lbl:SetText(k)
+			lbl:SetFont("ESDefault")
+			lbl:SizeToContents()
+			lbl:SetPos(26,0)
+
+
 		end
+
+		y=pnl.y+pnl:GetTall()
+
 	end
 
-	info = Label("Hover over one of the difficulties to view more information.",joinFrame);
-	info:SetFont("BHOPDifficultyTeamInfo");
-	info:SetColor(COLOR_WHITE);
-	info:SizeToContents()
-	timer.Simple(0,function()
-		if not IsValid(info) then return end
-		info:SetPos(marginX,pnl.y + pnl:GetTall() + marginX);
-	end)
+	local btnspec=vgui.Create("esButton",joinFrame)
+	btnspec:SetSize(240,40)
+	btnspec:SetPos(ScrW()/2 - btnspec:GetWide()/2,y+marginX)
+	btnspec:SetText("Spawn as spectator")
+	btnspec.OnMouseReleased=function(self)
+		RunConsoleCommand("bhop_requestspawn",5)
+	end
+
 
 	joinFrame:MakePopup();
 
@@ -183,4 +175,3 @@ openSpawnSelection = function()
 end
 concommand.Add("bhop_open_difficulty",openSpawnSelection)
 hook.Add("Initialize","BHOP.OpenDifficultyOnJoin",openSpawnSelection)
-local canRemove = false
