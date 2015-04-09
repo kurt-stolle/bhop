@@ -213,7 +213,7 @@ function BHOP:ESPlayerReady(p)
 			print("Created new Bhop profile!");
 			return
 		end
-		p:ESSetNetworkedVariable("bhop_points",dt[1].points);
+		p:ESSetNetworkedVariable("bhop_points",tonumber(dt[1].points));
 	end)
 end
 
