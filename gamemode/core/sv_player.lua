@@ -201,13 +201,16 @@ end
 function BHOP:PlayerInitialSpawn(p)
 	p.Observers = {};
 	p:SetTeam(TEAM_SPECTATOR)
+end
 
+function BHOP:ESPlayerReady(p)
 	ES.DBQuery("SELECT points FROM bhop_player WHERE steamid = '"..p:SteamID().."';",function(dt)
 		if not IsValid(p) then
 			return
 		elseif not dt or not dt[1] or not dt[1].points then
 			ES.DBQuery("INSERT INTO bhop_player SET steamid = '"..p:SteamID().."', points = 0;");
 			p:ESSetNetworkedVariable("bhop_points",0)
+			print("Created new Bhop profile!");
 			return
 		end
 		p:ESSetNetworkedVariable("bhop_points",dt[1].points);
