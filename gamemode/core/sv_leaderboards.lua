@@ -47,8 +47,10 @@ concommand.Add("bhop_requestmaps",function(p)
 	net.WriteTable(maps);
 	net.Send(p);
 end)
-hook.Add("ESPostGetServerID","bhopLoadMapsList",function()
-	ES.DBQuery("SELECT map FROM es_mapvote WHERE serverid = "..ES.ServerID.." AND enabled = 1;",function(res)
+hook.Add("ESDatabaseReady","bhopLoadMapsList",function()
+	print("Loading maps list...")
+
+	ES.DBQuery("SELECT DISTINCT map FROM bhop_leaderboards;",function(res)
 		if res and res[1] then
 			maps = {};
 			for k,v in pairs(res)do
@@ -123,17 +125,17 @@ concommand.Add("bhop_requestboards",function(p,c,a)
 		boards[map][4] = {};
 	end
 
-	ES.DBQuery("SELECT steamid, name, MIN(time) AS time FROM bhop_leaderboards WHERE difficulty = 2 AND map = '"..map.."' GROUP BY steamid ORDER BY time ASC LIMIT 10",function()
+	ES.DBQuery("SELECT steamid, name, MIN(time) AS time FROM bhop_leaderboards WHERE difficulty = 2 AND map = '"..map.."' GROUP BY steamid ORDER BY time ASC LIMIT 10;",function(res)
 		if res and res[1] then
 			boards[map][2] = res;
 		end
 
-		ES.DBQuery("SELECT steamid, name, MIN(time) AS time FROM bhop_leaderboards WHERE difficulty = 3 AND map = '"..map.."' GROUP BY steamid ORDER BY time ASC LIMIT 10",function()
+		ES.DBQuery("SELECT steamid, name, MIN(time) AS time FROM bhop_leaderboards WHERE difficulty = 3 AND map = '"..map.."' GROUP BY steamid ORDER BY time ASC LIMIT 10;",function(res)
 			if res and res[1] then
 				boards[map][3] = res;
 			end
 
-			ES.DBQuery("SELECT steamid, name, MIN(time) AS time FROM bhop_leaderboards WHERE difficulty = 4 AND map = '"..map.."' GROUP BY steamid ORDER BY time ASC LIMIT 10",function()
+			ES.DBQuery("SELECT steamid, name, MIN(time) AS time FROM bhop_leaderboards WHERE difficulty = 4 AND map = '"..map.."' GROUP BY steamid ORDER BY time ASC LIMIT 10;",function(res)
 				if res and res[1] then
 					boards[map][4] = res;
 				end
