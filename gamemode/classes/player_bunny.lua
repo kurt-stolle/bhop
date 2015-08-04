@@ -30,8 +30,6 @@ if SERVER then
 
 		net.Start("BHOP.SyncHullSize");
 		net.Send(self.Player);
-
-		self.Player:SetJumpPower(self.preferences and self.preferences.jump or math.sqrt(2 * 800 * 57))
 	end
 else
 	net.Receive("BHOP.SyncHullSize",function()

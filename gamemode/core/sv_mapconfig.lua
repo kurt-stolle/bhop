@@ -23,15 +23,14 @@ concommand.Add("bhop_admin_setmultiplier",function(ply,_,args)
 end)
 
 hook.Add("ESDatabaseReady","BHOP.SetupData",function()
-	ES.DBQuery("CREATE TABLE IF NOT EXISTS `bhop_mapconfig_mul` ( `id` int(10) unsigned NOT NULL AUTO_INCREMENT, map varchar(255), mul float, PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1"):wait()
-	ES.DBQuery("CREATE TABLE IF NOT EXISTS `bhop_mapconfig_finish` ( `id` int(10) unsigned NOT NULL AUTO_INCREMENT, map varchar(255), mins varchar(255), maxs varchar(255), PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1"):wait()
+	ES.DBQuery("CREATE TABLE IF NOT EXISTS `bhop_mapconfig_mul` ( `id` int(10) unsigned NOT NULL AUTO_INCREMENT, map varchar(255), mul float, PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1")
+	ES.DBQuery("CREATE TABLE IF NOT EXISTS `bhop_mapconfig_finish` ( `id` int(10) unsigned NOT NULL AUTO_INCREMENT, map varchar(255), mins varchar(255), maxs varchar(255), PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1")
+	ES.DBQuery("CREATE TABLE IF NOT EXISTS `bhop_mapconfig_start` ( `id` int(10) unsigned NOT NULL AUTO_INCREMENT, map varchar(255), mins varchar(255), maxs varchar(255), PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1")
 
 	ES.DBQuery("SELECT mul FROM `bhop_mapconfig_mul` WHERE map='"..game.GetMap().."' LIMIT 1;",function(res)
 		if res and res[1] and res[1].mul then
 			mapMul=tonumber(res[1].mul)
 			BHOP.DebugPrint("Map multiplier set: "..mapMul)
-
-
 		end
 	end)
 

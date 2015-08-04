@@ -2,7 +2,7 @@
 
 function BHOP:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 
- chat.AddText(player,ES.Color.White," ("..(player:GetRank().name).."): ",strText)
+ chat.AddText(player or "CONSOLE",ES.Color.White," ("..(player.GetRank and player:GetRank().name or "CONSOLE").."): ",strText)
  return true
 
 end
