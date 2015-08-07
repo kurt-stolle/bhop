@@ -47,7 +47,11 @@ if SERVER then
 			ply.didFinish=true
 
 			ply:HandleLeaderboards()
-			ES.ChatBroadcast("<hl>"..ply:Nick().."</hl> has finished the map on <hl>"..ply:GetDifficulty().name.."</hl> mode in <hl>"..ply:GetTimeString().."</hl>!")
+			for k,v in ipairs(player.GetAll())do
+				v:ChatPrint("<hl>"..ply:Nick().."</hl> has finished the map on <hl>"..ply:GetDifficulty().name.."</hl> mode in <hl>"..ply:GetTimeString().."</hl>!")
+			end
+
+			ply:ESSendNotificationPopup("Finished","Congratsulations!\n\nYou completed the map in "..ply:GetTimeString().." on "..ply:GetDifficulty().name.." mode. \n\nPress F4 to reset or press F1 to pick another mode.")
 
 			ply:AddPoints(50 * BHOP:GetMapPointsMultiplier() * ply:GetDifficulty().mul)
 
@@ -62,6 +66,8 @@ if SERVER then
 			table.insert(noReward[ply],ply:GetDifficulty())
 
 			ply:ESAddBananas(10)
+
+			BHOP.DebugPrint(ply:Nick().." has finished the map!")
 		end
 	end
 

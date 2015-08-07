@@ -15,9 +15,6 @@ if SERVER then
 	util.AddNetworkString("BHOP.SyncHullSize");
 
 	function PLAYER:Loadout()
-		if self.Player:ESIsRankOrHigher("operator") then
-			self.Player:Give("bhop_mapconfig")
-		end
 		self.Player:Give(self.Player:ESGetMeleeWeaponClass());
 		self.Player:Give( "weapon_nothing" );
 		self.Player:SelectWeapon("weapon_nothing")

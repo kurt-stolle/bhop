@@ -15,8 +15,8 @@ if ( CLIENT ) then
 	SWEP.ViewModelFlip		= true;
 	SWEP.CSMuzzleFlashes	= true;
 	SWEP.DrawWeaponInfoBox  = false;
-	
-	SWEP.Slot				= 3;
+
+	SWEP.Slot				= 2;
 	SWEP.SlotPos			= 1;
 end
 
@@ -34,7 +34,7 @@ SWEP.Category		= "_NewBee AKA Excl";
 
 
 SWEP.ViewModel = "";
-SWEP.WorldModel = ""; 
+SWEP.WorldModel = "";
 
 SWEP.Primary.ClipSize		= -1;
 SWEP.Primary.DefaultClip	= -1;
@@ -47,12 +47,12 @@ SWEP.Secondary.Automatic	= false;
 SWEP.Secondary.Ammo			= "none";
 
 function SWEP:Initialize()
-	if IsValid(self) and self.SetWeaponHoldType then 
+	if IsValid(self) and self.SetWeaponHoldType then
 		self:SetWeaponHoldType("normal");
 	end
 end
 
-function SWEP:Deploy()	
+function SWEP:Deploy()
 	return true;
 end
 
@@ -60,7 +60,7 @@ function SWEP:Holster()
 	return true;
 end
 
-function SWEP:Reload()	
+function SWEP:Reload()
 end
 
 function SWEP:PrimaryAttack()

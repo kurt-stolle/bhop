@@ -52,7 +52,7 @@ local function createMenu()
 
 	local right=lb:Add("Panel")
 	right:Dock(FILL)
-	right:DockMargin(0,30,0,0)
+	right:DockMargin(0,0,0,0)
 
 	local lbl=right:Add("esLabel")
 	lbl:SetFont("ESDefault++")
